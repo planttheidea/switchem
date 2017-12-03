@@ -9,7 +9,7 @@ An extensible, functional switch with a chainable API
 ## Table of contents
 
 * [Usage](#usage)
-* [Switchem API](#switchem-api)
+* [switchem API](#switchem-api)
   * [default](#default)
   * [is](#is)
   * [match](#match)
@@ -45,7 +45,7 @@ console.log(sw2.match('baz')); // I am not bar
 console.log(sw2.match('bar')); // I am actually bar'
 ```
 
-## Switchem API
+## switchem API
 
 #### default
 
