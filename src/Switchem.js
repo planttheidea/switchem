@@ -16,7 +16,7 @@ export const DEFAULT_OPTIONS = {
  */
 export class Switchem {
   constructor(options, cases, defaultValue) {
-    this.cases = cases || [];
+    this.cases = Array.isArray(cases) ? cases : [];
     this.defaultValue = defaultValue;
     this.options = {
       ...DEFAULT_OPTIONS,

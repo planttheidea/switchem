@@ -45,7 +45,7 @@ export const createCaseCreator = (method, isNot) => {
       key: testValue,
       test: isNot
         ? (matchValue) => {
-          return method(testValue, matchValue) ? NO_MATCH_FOUND : matchResult;
+          return !method(testValue, matchValue) ? matchResult : NO_MATCH_FOUND;
         }
         : (matchValue) => {
           return method(testValue, matchValue) ? matchResult : NO_MATCH_FOUND;

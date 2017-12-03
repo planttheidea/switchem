@@ -37,7 +37,7 @@ console.log(sw1.match('baz')); // I am not bar
 console.log(sw1.match('bar')); // I must be bar!'
 
 // extend existing switch statements by simply adding to them
-const sw2 = switchem().is(value => {
+const sw2 = sw1.is(value => {
   return value === 'bar';
 }, 'I am actually bar');
 
