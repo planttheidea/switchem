@@ -15,6 +15,8 @@ An extensible, functional switch with a chainable API
   * [match](#match)
   * [merge](#merge)
   * [not](#not)
+* [Options](#options)
+  * [runMatchCallback](#runmatchcallback)
 * [Additional methods](#additional-methods)
   * [addCustomCase](#addcustomcase)
 * [Browser support](#browser-support)
@@ -159,6 +161,32 @@ console.log(sw.match('bar')); // bar non-match found: foo
 
 This setting can be disabled by setting `runMatchCallback` to `false` in `options`.
 
+## Options
+
+#### runMatchCallback
+
+_boolean, defaults to true_
+
+When this option is `true`, then any functions that are used as `matchResult` values will be executed upon match.
+
+```javascript
+const sw = switcher().is('foo', (testValue, matchValue) => {
+  return [matchValue, testValue];
+});
+
+console.log(sw.match('foo')); // ['foo', 'foo']
+```
+
+When set to `false`, the method is returned like standard values.
+
+```javascript
+const sw = switcher({runMatchCallback: false}).is('foo', (testValue, matchValue) => {
+  return [matchValue, testValue];
+});
+
+console.log(sw.match('foo')); // (testValue, matchValue) => { return [matchValue, testValue]; }
+```
+
 ## Additional methods
 
 #### addCustomCase
@@ -191,6 +219,9 @@ const sw2 = switcher().notDivisibleBy(7, 'not divisible by seven');
 
 console.log(s2.match(12)); // not divisible by seven
 ```
+
+This method will be available for all uses of `switchem` after execution, so it is recommended to run this method as
+early in your app initialization as possible.
 
 ## Browser support
 
