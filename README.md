@@ -34,7 +34,7 @@ const sw1 = switchem()
   .default('I must be bar!');
 
 console.log(sw1.match('baz')); // I am not bar
-console.log(sw1.match('bar')); // I must be bar!'
+console.log(sw1.match('bar')); // I must be bar!
 
 // extend existing switch statements by simply adding to them
 const sw2 = sw1.is(value => {
@@ -42,7 +42,14 @@ const sw2 = sw1.is(value => {
 }, 'I am actually bar');
 
 console.log(sw2.match('baz')); // I am not bar
-console.log(sw2.match('bar')); // I am actually bar'
+console.log(sw2.match('bar')); // I am actually bar
+
+// or add commonly-used cases for reuse
+addCustomCase('isDivisibleBy', (testValue, matchValue) => {
+  return matchValue % testValue === 0;
+});
+
+console.log(switchem().isDivisibleBy(7, 'divisible by seven').match(49)); // divisible by seven
 ```
 
 ## switchem API
@@ -54,7 +61,7 @@ _default(defaultValue: any): Switchem_
 Set the default value for the switch, which is returned if none of the cases match.
 
 ```javascript
-const sw = switcher().default('default');
+const sw = switchem().default('default');
 ```
 
 #### is
@@ -64,7 +71,7 @@ _is(testValue: any, matchResult: ?any = true): Switchem_
 Add a case statement that tests for equality with the `matchValue`.
 
 ```javascript
-const sw = switcher()
+const sw = switchem()
   // functions are executed passing the switched value
   .is(value => {
     return value % 2 === 0;
@@ -83,7 +90,7 @@ If you provide a function as a `matchResult`, by default this will be called wit
 `matchValue`
 
 ```javascript
-const sw = switcher().is('foo', (testValue, matchValue) => {
+const sw = switchem().is('foo', (testValue, matchValue) => {
   return `${matchValue} match found: ${testValue}`.
 });
 
@@ -99,7 +106,7 @@ _match(matchValue: any): any_
 Find the match for `matchValue` based on the existing cases provided in the switch.
 
 ```javascript
-const sw = switcher().is('foo', 'I am foo');
+const sw = switchem().is('foo', 'I am foo');
 
 console.log(sw.match('foo')); // I am foo
 ```
@@ -133,7 +140,7 @@ _not(testValue: any, matchResult: ?any = true): Switchem_
 Add a case statement that tests for non-equality with the `matchValue`.
 
 ```javascript
-const sw = switcher()
+const sw = switchem()
   // functions are executed passing the switched value
   .not(value => {
     return value % 2 === 0;
@@ -152,7 +159,7 @@ If you provide a function as a `matchResult`, by default this will be called wit
 `matchValue`
 
 ```javascript
-const sw = switcher().not('foo', (testValue, matchValue) => {
+const sw = switchem().not('foo', (testValue, matchValue) => {
   return `${matchValue} non-match found: ${testValue}`.
 });
 
@@ -170,7 +177,7 @@ _boolean, defaults to true_
 When this option is `true`, then any functions that are used as `matchResult` values will be executed upon match.
 
 ```javascript
-const sw = switcher().is('foo', (testValue, matchValue) => {
+const sw = switchem().is('foo', (testValue, matchValue) => {
   return [matchValue, testValue];
 });
 
@@ -180,7 +187,7 @@ console.log(sw.match('foo')); // ['foo', 'foo']
 When set to `false`, the method is returned like standard values.
 
 ```javascript
-const sw = switcher({runMatchCallback: false}).is('foo', (testValue, matchValue) => {
+const sw = switchem({runMatchCallback: false}).is('foo', (testValue, matchValue) => {
   return [matchValue, testValue];
 });
 
@@ -202,7 +209,7 @@ import {addCustomCase} from 'switchem';
 
 addCustomCase('contains', contains);
 
-const sw1 = switcher().contains('bar', 'I contain bar!');
+const sw1 = switchem().contains('bar', 'I contain bar!');
 
 console.log(sw1.match(['foo', 'bar', 'baz'])); // I contain bar!
 
@@ -215,7 +222,7 @@ addCustomCase(
   true
 );
 
-const sw2 = switcher().notDivisibleBy(7, 'not divisible by seven');
+const sw2 = switchem().notDivisibleBy(7, 'not divisible by seven');
 
 console.log(s2.match(12)); // not divisible by seven
 ```
