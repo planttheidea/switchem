@@ -49,7 +49,11 @@ addCustomCase('isDivisibleBy', (testValue, matchValue) => {
   return matchValue % testValue === 0;
 });
 
-console.log(switchem().isDivisibleBy(7, 'divisible by seven').match(49)); // divisible by seven
+console.log(
+  switchem()
+    .isDivisibleBy(7, 'divisible by seven')
+    .match(49)
+); // divisible by seven
 ```
 
 ## switchem API
@@ -78,6 +82,8 @@ const sw = switchem()
   }, 'I am an even number')
   // regex values are tested via re.test()
   .is(/bar/g, 'I contain bar')
+  // NaN value comparisons are supported
+  .is(NaN, 'I am a NaN')
   // static values test for strict equality
   .is('foo', 'I am foo');
 
