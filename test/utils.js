@@ -5,6 +5,24 @@ import sinon from 'sinon';
 // src
 import * as utils from 'src/utils';
 
+test('if isSameValueZero returns true if values are strictly equal and false if not', (t) => {
+  const value = 'foo';
+  const equalValue = 'foo';
+  const notEqualValue = 'bar';
+
+  t.true(utils.isSameValueZero(value, equalValue));
+  t.false(utils.isSameValueZero(value, notEqualValue));
+});
+
+test('if isSameValueZero returns true if values are both NaN equal and false if not', (t) => {
+  const value = NaN;
+  const equalValue = NaN;
+  const notEqualValue = 12;
+
+  t.true(utils.isSameValueZero(value, equalValue));
+  t.false(utils.isSameValueZero(value, notEqualValue));
+});
+
 test('if isEqual will return the result of the call if testValue is a function', (t) => {
   const resultValue = 'resultValue';
 
@@ -40,6 +58,15 @@ test('if isEqual will do a strict equality test if not a function or regexp valu
   const result = utils.isEqual(testValue, matchValue);
 
   t.false(result);
+});
+
+test('if isEqual will do a NaN equivalency test if both values are NaN', (t) => {
+  const testValue = NaN;
+  const matchValue = NaN;
+
+  const result = utils.isEqual(testValue, matchValue);
+
+  t.true(result);
 });
 
 test('if createCase will create a case handler based on being equal where the values are not equal', (t) => {

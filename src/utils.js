@@ -4,6 +4,21 @@
 export const NO_MATCH_FOUND = typeof Symbol === 'function' ? Symbol('NO_MATCH_FOUND') : '__SWITCHER_NO_MATCH_FOUND__';
 
 /**
+ * @function isSameValueZero
+ *
+ * @description
+ * are the two values equal based on SameValueZero comparison:
+ * https://www.ecma-international.org/ecma-262/7.0/#sec-samevaluezero
+ *
+ * @param {*} value1 the first value to compare
+ * @param {*} value2 the second value to compare
+ * @returns {boolean} are the values equal based on SameValueZero
+ */
+export const isSameValueZero = (value1, value2) => {
+  return value1 === value2 || (value1 !== value1 && value2 !== value2);
+};
+
+/**
  * @function isEqual
  *
  * @description
@@ -16,7 +31,7 @@ export const NO_MATCH_FOUND = typeof Symbol === 'function' ? Symbol('NO_MATCH_FO
 export const isEqual = (testValue, matchValue) => {
   return typeof testValue === 'function'
     ? testValue(matchValue)
-    : testValue instanceof RegExp ? testValue.test(matchValue) : testValue === matchValue;
+    : testValue instanceof RegExp ? testValue.test(matchValue) : isSameValueZero(testValue, matchValue);
 };
 
 /**
