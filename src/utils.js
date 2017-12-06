@@ -1,7 +1,7 @@
 /**
  * @constant {string|symbol} NO_MATCH_FOUND
  */
-export const NO_MATCH_FOUND = typeof Symbol === 'function' ? Symbol('NO_MATCH_FOUND') : '__SWITCHER_NO_MATCH_FOUND__';
+export const NO_MATCH_FOUND = typeof Symbol === 'function' ? Symbol('NO_MATCH_FOUND') : '__SWITCHEM_NO_MATCH_FOUND__';
 
 /**
  * @function isSameValueZero
