@@ -1,5 +1,9 @@
 # switchem CHANGELOG
 
+## 1.1.1
+
+* Fix typo in "no match found" symbol
+
 ## 1.1.0
 
 * Support `NaN` equality comparisons in `is` and `not`
