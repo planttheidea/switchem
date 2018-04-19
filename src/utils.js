@@ -14,9 +14,7 @@ export const NO_MATCH_FOUND = typeof Symbol === 'function' ? Symbol('NO_MATCH_FO
  * @param {*} value2 the second value to compare
  * @returns {boolean} are the values equal based on SameValueZero
  */
-export const isSameValueZero = (value1, value2) => {
-  return value1 === value2 || (value1 !== value1 && value2 !== value2);
-};
+export const isSameValueZero = (value1, value2) => value1 === value2 || (value1 !== value1 && value2 !== value2);
 
 /**
  * @function isEqual
@@ -28,11 +26,12 @@ export const isSameValueZero = (value1, value2) => {
  * @param {*} matchValue the value to test (the value passed to the .match() method)
  * @returns {boolean} are the values equal
  */
-export const isEqual = (testValue, matchValue) => {
-  return typeof testValue === 'function'
+export const isEqual = (testValue, matchValue) =>
+  typeof testValue === 'function'
     ? testValue(matchValue)
-    : testValue instanceof RegExp ? testValue.test(matchValue) : isSameValueZero(testValue, matchValue);
-};
+    : testValue instanceof RegExp
+      ? testValue.test(matchValue)
+      : isSameValueZero(testValue, matchValue);
 
 /**
  * @function createCaseCreator
@@ -44,7 +43,7 @@ export const isEqual = (testValue, matchValue) => {
  * @param {boolean} [isNot] is the method a "not" comparison, returning true if the method returns falsy
  * @returns {function} the method to create the case entry in Switchem
  */
-export const createCaseCreator = (method, isNot) => {
+export const createCaseCreator = (method, isNot) =>
   /**
    * @function createCase
    *
@@ -55,19 +54,12 @@ export const createCaseCreator = (method, isNot) => {
    * @param {*} [matchResult=true] the matchResult to return if the method returns correctly
    * @returns {{key: *, test: function(*): *}} the case entry for future testing of a matchValue
    */
-  return (testValue, matchResult = true) => {
-    return {
-      key: testValue,
-      test: isNot
-        ? (matchValue) => {
-          return !method(testValue, matchValue) ? matchResult : NO_MATCH_FOUND;
-        }
-        : (matchValue) => {
-          return method(testValue, matchValue) ? matchResult : NO_MATCH_FOUND;
-        }
-    };
-  };
-};
+  (testValue, matchResult = true) => ({
+    key: testValue,
+    test: isNot
+      ? (matchValue) => (!method(testValue, matchValue) ? matchResult : NO_MATCH_FOUND)
+      : (matchValue) => (method(testValue, matchValue) ? matchResult : NO_MATCH_FOUND)
+  });
 
 /**
  * @function getMatchingKeyValuePair

@@ -25,33 +25,33 @@ An extensible, functional switch with a chainable API
 ## Usage
 
 ```javascript
-import switchem, {addCustomCase} from 'switchem';
+import switchem, { addCustomCase } from "switchem";
 
 // create switch statements with the chainable API
 const sw1 = switchem()
-  .is('foo', 'I am foo')
-  .not('bar', 'I am not bar')
-  .default('I must be bar!');
+  .is("foo", "I am foo")
+  .not("bar", "I am not bar")
+  .default("I must be bar!");
 
-console.log(sw1.match('baz')); // I am not bar
-console.log(sw1.match('bar')); // I must be bar!
+console.log(sw1.match("baz")); // I am not bar
+console.log(sw1.match("bar")); // I must be bar!
 
 // extend existing switch statements by simply adding to them
 const sw2 = sw1.is(value => {
-  return value === 'bar';
-}, 'I am actually bar');
+  return value === "bar";
+}, "I am actually bar");
 
-console.log(sw2.match('baz')); // I am not bar
-console.log(sw2.match('bar')); // I am actually bar
+console.log(sw2.match("baz")); // I am not bar
+console.log(sw2.match("bar")); // I am actually bar
 
 // or add commonly-used cases for reuse
-addCustomCase('isDivisibleBy', (testValue, matchValue) => {
+addCustomCase("isDivisibleBy", (testValue, matchValue) => {
   return matchValue % testValue === 0;
 });
 
 console.log(
   switchem()
-    .isDivisibleBy(7, 'divisible by seven')
+    .isDivisibleBy(7, "divisible by seven")
     .match(49)
 ); // divisible by seven
 ```
@@ -65,7 +65,7 @@ _default(defaultValue: any): Switchem_
 Set the default value for the switch, which is returned if none of the cases match.
 
 ```javascript
-const sw = switchem().default('default');
+const sw = switchem().default("default");
 ```
 
 #### is
@@ -79,17 +79,17 @@ const sw = switchem()
   // functions are executed passing the switched value
   .is(value => {
     return value % 2 === 0;
-  }, 'I am an even number')
+  }, "I am an even number")
   // regex values are tested via re.test()
-  .is(/bar/g, 'I contain bar')
+  .is(/bar/g, "I contain bar")
   // NaN value comparisons are supported
-  .is(NaN, 'I am a NaN')
+  .is(NaN, "I am a NaN")
   // static values test for strict equality
-  .is('foo', 'I am foo');
+  .is("foo", "I am foo");
 
 console.log(sw.match(4)); // I am an even number
-console.log(sw.match('bar')); // I contain bar
-console.log(sw.match('foo')); // I am foo
+console.log(sw.match("bar")); // I contain bar
+console.log(sw.match("foo")); // I am foo
 ```
 
 If you provide a function as a `matchResult`, by default this will be called with both the `testValue` and the
@@ -112,9 +112,9 @@ _match(matchValue: any): any_
 Find the match for `matchValue` based on the existing cases provided in the switch.
 
 ```javascript
-const sw = switchem().is('foo', 'I am foo');
+const sw = switchem().is("foo", "I am foo");
 
-console.log(sw.match('foo')); // I am foo
+console.log(sw.match("foo")); // I am foo
 ```
 
 #### merge
@@ -126,9 +126,12 @@ Merge the `switchem` instances passed into a new, combined instance.
 ```javascript
 const original = switchem();
 const first = switchem()
-  .default('defaultValue')
-  .is('first', 'I am first');
-const second = switchem({runMatchCallback: false}).is('second', 'I am second');
+  .default("defaultValue")
+  .is("first", "I am first");
+const second = switchem({ runMatchCallback: false }).is(
+  "second",
+  "I am second"
+);
 
 const merged = original.merge(first, second);
 
@@ -150,15 +153,15 @@ const sw = switchem()
   // functions are executed passing the switched value
   .not(value => {
     return value % 2 === 0;
-  }, 'I am an odd number')
+  }, "I am an odd number")
   // regex values are tested via re.test()
-  .not(/bar/g, 'I do not contain bar')
+  .not(/bar/g, "I do not contain bar")
   // static values test for strict equality
-  .not('foo', 'I am not foo');
+  .not("foo", "I am not foo");
 
 console.log(sw.match(3)); // I am an odd number
-console.log(sw.match('bar')); // I am not foo
-console.log(sw.match('foo')); // I do not contain bar
+console.log(sw.match("bar")); // I am not foo
+console.log(sw.match("foo")); // I do not contain bar
 ```
 
 If you provide a function as a `matchResult`, by default this will be called with both the `testValue` and the
@@ -183,21 +186,24 @@ _boolean, defaults to true_
 When this option is `true`, then any functions that are used as `matchResult` values will be executed upon match.
 
 ```javascript
-const sw = switchem().is('foo', (testValue, matchValue) => {
+const sw = switchem().is("foo", (testValue, matchValue) => {
   return [matchValue, testValue];
 });
 
-console.log(sw.match('foo')); // ['foo', 'foo']
+console.log(sw.match("foo")); // ['foo', 'foo']
 ```
 
 When set to `false`, the method is returned like standard values.
 
 ```javascript
-const sw = switchem({runMatchCallback: false}).is('foo', (testValue, matchValue) => {
-  return [matchValue, testValue];
-});
+const sw = switchem({ runMatchCallback: false }).is(
+  "foo",
+  (testValue, matchValue) => {
+    return [matchValue, testValue];
+  }
+);
 
-console.log(sw.match('foo')); // (testValue, matchValue) => { return [matchValue, testValue]; }
+console.log(sw.match("foo")); // (testValue, matchValue) => { return [matchValue, testValue]; }
 ```
 
 ## Additional methods
@@ -210,25 +216,25 @@ Adds a custom case method to the `switchem` prototype, which provides convenient
 
 ```javascript
 // use existing utility methods
-import {contains} from 'ramda';
-import {addCustomCase} from 'switchem';
+import { contains } from "ramda";
+import { addCustomCase } from "switchem";
 
-addCustomCase('contains', contains);
+addCustomCase("contains", contains);
 
-const sw1 = switchem().contains('bar', 'I contain bar!');
+const sw1 = switchem().contains("bar", "I contain bar!");
 
-console.log(sw1.match(['foo', 'bar', 'baz'])); // I contain bar!
+console.log(sw1.match(["foo", "bar", "baz"])); // I contain bar!
 
 // or add your own
 addCustomCase(
-  'notDivisibleBy',
+  "notDivisibleBy",
   (testValue, matchValue) => {
     return matchValue % testValue === 0;
   },
   true
 );
 
-const sw2 = switchem().notDivisibleBy(7, 'not divisible by seven');
+const sw2 = switchem().notDivisibleBy(7, "not divisible by seven");
 
 console.log(s2.match(12)); // not divisible by seven
 ```
@@ -251,8 +257,7 @@ early in your app initialization as possible.
 
 Standard stuff, clone the repo and `npm install` dependencies. The npm scripts available:
 
-* `build` => run webpack to build development `dist` file with NODE_ENV=development
-* `build:minified` => run webpack to build production `dist` file with NODE_ENV=production
+* `build` => run rolup to build `dist` files
 * `dev` => run webpack dev server to run example app / playground
 * `dist` => runs `build` and `build-minified`
 * `lint` => run ESLint against all files in the `src` folder

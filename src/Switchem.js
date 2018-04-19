@@ -18,10 +18,7 @@ export class Switchem {
   constructor(options, cases, defaultValue) {
     this.cases = Array.isArray(cases) ? cases : [];
     this.defaultValue = defaultValue;
-    this.options = {
-      ...DEFAULT_OPTIONS,
-      ...options
-    };
+    this.options = {...DEFAULT_OPTIONS, ...options};
 
     return this;
   }
@@ -66,9 +63,11 @@ export class Switchem {
    * @returns {Switchem}
    */
   match(matchValue) {
-    const {key, value} = getMatchingKeyValuePair(this.cases, matchValue, this.defaultValue);
+    const match = getMatchingKeyValuePair(this.cases, matchValue, this.defaultValue);
 
-    return this.options.runMatchCallback && typeof value === 'function' ? value(key, matchValue) : value;
+    return this.options.runMatchCallback && typeof match.value === 'function'
+      ? match.value(match.key, matchValue)
+      : match.value;
   }
 
   /**
@@ -82,13 +81,15 @@ export class Switchem {
    * @returns {Switchem} the merged switchem instance
    */
   merge(...switchems) {
-    return switchems.reduce((mergedSwitchem, switchem) => {
-      return new Switchem(
-        {...mergedSwitchem.options, ...switchem.options},
-        [...mergedSwitchem.cases, ...switchem.cases],
-        switchem.defaultValue === undefined ? mergedSwitchem.defaultValue : switchem.defaultValue
-      );
-    }, this);
+    return switchems.reduce(
+      (mergedSwitchem, switchem) =>
+        new Switchem(
+          {...mergedSwitchem.options, ...switchem.options},
+          [...mergedSwitchem.cases, ...switchem.cases],
+          switchem.defaultValue === undefined ? mergedSwitchem.defaultValue : switchem.defaultValue
+        ),
+      this
+    );
   }
 
   /**
