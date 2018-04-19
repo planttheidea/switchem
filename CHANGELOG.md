@@ -1,5 +1,9 @@
 # switchem CHANGELOG
 
+## 1.1.2
+
+* Use `rollup` to build files in `dist` instead of `webpack` for smaller filesize
+
 ## 1.1.1
 
 * Fix typo in "no match found" symbol

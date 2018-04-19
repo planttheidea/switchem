@@ -39,6 +39,4 @@ export const addCustomCase = (name, method, isNot) => {
  * @param {Object} options the options to create the instance with
  * @returns {Switchem} the new switchem instance
  */
-export default (options) => {
-  return new Switchem(options);
-};
+export default (options) => new Switchem(options);

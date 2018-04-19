@@ -70,9 +70,7 @@ test('if isEqual will do a NaN equivalency test if both values are NaN', (t) => 
 });
 
 test('if createCase will create a case handler based on being equal where the values are not equal', (t) => {
-  const method = (testValue, matchValue) => {
-    return testValue === matchValue;
-  };
+  const method = (testValue, matchValue) => testValue === matchValue;
   const isNot = false;
 
   const createCase = utils.createCaseCreator(method, isNot);
@@ -93,9 +91,7 @@ test('if createCase will create a case handler based on being equal where the va
 });
 
 test('if createCase will create a case handler based on being equal where the values are equal', (t) => {
-  const method = (testValue, matchValue) => {
-    return testValue === matchValue;
-  };
+  const method = (testValue, matchValue) => testValue === matchValue;
   const isNot = false;
 
   const createCase = utils.createCaseCreator(method, isNot);
@@ -116,9 +112,7 @@ test('if createCase will create a case handler based on being equal where the va
 });
 
 test('if createCase will create a case handler based on being equal where the values are equal with a custom matchResult', (t) => {
-  const method = (testValue, matchValue) => {
-    return testValue === matchValue;
-  };
+  const method = (testValue, matchValue) => testValue === matchValue;
   const isNot = false;
 
   const createCase = utils.createCaseCreator(method, isNot);
@@ -139,9 +133,7 @@ test('if createCase will create a case handler based on being equal where the va
 });
 
 test('if createCase will create a case handler based on being not equal where the values are equal', (t) => {
-  const method = (testValue, matchValue) => {
-    return testValue === matchValue;
-  };
+  const method = (testValue, matchValue) => testValue === matchValue;
   const isNot = true;
 
   const createCase = utils.createCaseCreator(method, isNot);
@@ -162,9 +154,7 @@ test('if createCase will create a case handler based on being not equal where th
 });
 
 test('if createCase will create a case handler based on being not equal where the values are not equal', (t) => {
-  const method = (testValue, matchValue) => {
-    return testValue === matchValue;
-  };
+  const method = (testValue, matchValue) => testValue === matchValue;
   const isNot = true;
 
   const createCase = utils.createCaseCreator(method, isNot);
@@ -185,9 +175,7 @@ test('if createCase will create a case handler based on being not equal where th
 });
 
 test('if createCase will create a case handler based on being not equal where the values are not equal with a custom matchResult', (t) => {
-  const method = (testValue, matchValue) => {
-    return testValue === matchValue;
-  };
+  const method = (testValue, matchValue) => testValue === matchValue;
   const isNot = true;
 
   const createCase = utils.createCaseCreator(method, isNot);
