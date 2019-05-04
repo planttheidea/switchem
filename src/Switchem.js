@@ -1,11 +1,15 @@
 // utils
-import {getMatchingKeyValuePair, is, not} from './utils';
+import {
+  getMatchingKeyValuePair,
+  is,
+  not,
+} from './utils';
 
 /**
  * @constant {Object} DEFAULT_OPTIONS
  */
 export const DEFAULT_OPTIONS = {
-  runMatchCallback: true
+  runMatchCallback: true,
 };
 
 /**
@@ -18,7 +22,9 @@ export class Switchem {
   constructor(options, cases, defaultValue) {
     this.cases = Array.isArray(cases) ? cases : [];
     this.defaultValue = defaultValue;
-    this.options = {...DEFAULT_OPTIONS, ...options};
+    this.options = {
+      ...DEFAULT_OPTIONS, ...options,
+    };
 
     return this;
   }
@@ -84,7 +90,9 @@ export class Switchem {
     return switchems.reduce(
       (mergedSwitchem, switchem) =>
         new Switchem(
-          {...mergedSwitchem.options, ...switchem.options},
+          {
+            ...mergedSwitchem.options, ...switchem.options,
+          },
           [...mergedSwitchem.cases, ...switchem.cases],
           switchem.defaultValue === undefined ? mergedSwitchem.defaultValue : switchem.defaultValue
         ),

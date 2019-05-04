@@ -1,5 +1,5 @@
 {
-  "extends": "rapid7/browser",
+  "extends": ["rapid7/browser"],
   "globals": {
     "__dirname": true,
     "global": true,
@@ -12,7 +12,7 @@
     "ecmaVersion": 2017,
     "sourceType": "module"
   },
-  "rules":{
+  "rules": {
     "arrow-body-style": [2, "as-needed"]
   }
 }

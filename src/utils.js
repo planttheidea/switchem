@@ -58,7 +58,7 @@ export const createCaseCreator = (method, isNot) =>
     key: testValue,
     test: isNot
       ? (matchValue) => (!method(testValue, matchValue) ? matchResult : NO_MATCH_FOUND)
-      : (matchValue) => (method(testValue, matchValue) ? matchResult : NO_MATCH_FOUND)
+      : (matchValue) => (method(testValue, matchValue) ? matchResult : NO_MATCH_FOUND),
   });
 
 /**
@@ -81,14 +81,14 @@ export const getMatchingKeyValuePair = (cases, testValue, defaultValue) => {
     if (iterationValue !== NO_MATCH_FOUND) {
       return {
         key: cases[index].key,
-        value: iterationValue
+        value: iterationValue,
       };
     }
   }
 
   return {
     key: 'default',
-    value: defaultValue
+    value: defaultValue,
   };
 };
 

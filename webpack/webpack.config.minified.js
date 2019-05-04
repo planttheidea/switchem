@@ -11,13 +11,13 @@ module.exports = Object.assign({}, defaultConfig, {
   mode: 'production',
 
   output: Object.assign({}, defaultConfig.output, {
-    filename: 'switchem.min.js'
+    filename: 'switchem.min.js',
   }),
 
   plugins: defaultConfig.plugins.concat([
     new webpack.LoaderOptionsPlugin({
       debug: false,
-      minimize: true
+      minimize: true,
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
@@ -38,12 +38,12 @@ module.exports = Object.assign({}, defaultConfig, {
         screw_ie8: true,
         sequences: true,
         unused: true,
-        warnings: false
+        warnings: false,
       },
-      sourceMap: false
+      sourceMap: false,
     }),
     new OptimizeJsPlugin({
-      sourceMap: false
-    })
-  ])
+      sourceMap: false,
+    }),
+  ]),
 });
